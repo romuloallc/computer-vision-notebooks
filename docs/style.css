@@ -68,7 +68,18 @@ hr.separator {
 .section .items .item {
     float: left;
     position: relative;
-    padding: 0 10px;
+    margin-left: 0.5em;
+}
+
+.section .items .item::before {
+    content: "\25B9";
+    color: gray;
+    background-color: rgba(128, 128, 128, 0.05);
+}
+
+.section .items .item:hover::before {
+    content: "\25B8";
+    color: rgb(25, 200, 0);
 }
 
 .section .items .item .content {
