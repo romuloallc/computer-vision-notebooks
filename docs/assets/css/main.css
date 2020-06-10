@@ -2827,10 +2827,11 @@ table.alt tbody tr td {
   display: -ms-flex;
   display: flex;
   flex-flow: column nowrap;
-  background-color: rgba(128, 128, 128, 0.1);
+  background-color: rgba(128, 128, 128, 0.05);
   width: calc(25% - 1em);
   margin-left: 1em;
   margin-top: 1em;
+  margin-bottom: 2em;
   padding: 0;
 }
 
@@ -3447,7 +3448,7 @@ body.is-preload #header.alt .logo {
 #main input[type="button"].primary,
 #main button.primary,
 #main .button.primary {
-  background-color: #8cc9f0;
+  background-color: hsl(150, 50%, 50%);
   color: #ffffff !important;
   box-shadow: none;
 }
@@ -3457,7 +3458,7 @@ body.is-preload #header.alt .logo {
 #main input[type="button"].primary:hover,
 #main button.primary:hover,
 #main .button.primary:hover {
-  background-color: #9acff2;
+  background-color: #454545;
 }
 
 #main input[type="submit"].primary:active,
@@ -3465,7 +3466,7 @@ body.is-preload #header.alt .logo {
 #main input[type="button"].primary:active,
 #main button.primary:active,
 #main .button.primary:active {
-  background-color: #7ec3ee;
+  background-color: hsl(150, 50%, 30%);
 }
 
 #main input[type="submit"].primary.icon:before,
