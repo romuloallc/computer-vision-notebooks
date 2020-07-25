@@ -13437,10 +13437,10 @@ $$<p><img src="sourceimages/ray-intersection_sphere_07.jpg" alt="image 07"></p>
 <span class="n">n_</span> <span class="o">=</span> <span class="n">n</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)[:,:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>         <span class="c1"># Normalize n</span>
 
 
-<span class="c1">############################</span>
-<span class="c1"># Simple point light model #</span>
-<span class="c1">############################</span>
-<span class="n">Cd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">])</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">0.455</span><span class="p">)</span>              <span class="c1"># Diffuse color of sphere</span>
+<span class="c1">##################################</span>
+<span class="c1"># Simple directional light model #</span>
+<span class="c1">##################################</span>
+<span class="n">Cd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">])</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">0.455</span><span class="p">)</span>              <span class="c1"># Sphere diffuse color with gamma compensation</span>
 
 <span class="c1"># Key light</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>                            <span class="c1"># Key light vector</span>
@@ -13459,13 +13459,12 @@ $$<p><img src="sourceimages/ray-intersection_sphere_07.jpg" alt="image 07"></p>
 <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="o">.</span><span class="n">imag</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">imag</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>         <span class="c1"># Init output image</span>
 <span class="n">output</span><span class="p">[</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff</span><span class="o">*</span><span class="n">i_</span><span class="p">)[</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">]</span>                         <span class="c1"># Shades diffuse and fr</span>
 
-<span class="c1"># Clamp values before visualization</span>
-<span class="n">output</span><span class="p">[</span><span class="n">output</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">output</span><span class="p">[</span><span class="n">output</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">output</span><span class="p">[</span><span class="n">output</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">output</span><span class="p">[</span><span class="n">output</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>           <span class="c1"># Clamp values before visualization</span>
 
 
 <span class="c1"># Visualization</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">output</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">2.2</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">output</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">2.2</span><span class="p">))</span>                               <span class="c1"># View the resulting image with gamma adjustment (sRGB)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
