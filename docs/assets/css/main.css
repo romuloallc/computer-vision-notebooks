@@ -3113,6 +3113,14 @@ table.alt tbody tr td {
   letter-spacing: -0.025em;
 }
 
+#header p .notebooks {
+  border-bottom: 1px dotted hsl(150, 50%, 50%);
+}
+
+#header p .computer-vision {
+  font-weight: 600;
+}
+
 #header.alt {
   padding: 7em 5em 4em 5em;
 }
