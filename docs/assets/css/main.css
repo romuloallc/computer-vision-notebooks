@@ -3113,12 +3113,42 @@ table.alt tbody tr td {
   letter-spacing: -0.025em;
 }
 
-#header p .notebooks {
+#header .description {
+  font-size: 1.25em;
+  letter-spacing: -0.025em;
+}
+
+#header .description .notebooks {
   border-bottom: 1px dotted hsl(150, 50%, 50%);
 }
 
-#header p .computer-vision {
+#header .description .computer-vision {
   font-weight: 600;
+}
+
+#header .signature {
+  transition: 0.5s;
+  color: rgba(255, 255, 255, 0.15);
+  font-style: italic;
+  font-weight: 100;
+  font-size: 1.1em;
+  letter-spacing: -0.025em;
+}
+
+#header .signature .name {
+  font-weight: 600;
+  border-bottom: none;
+}
+
+#header .signature .name:hover {
+  color: hsl(150, 50%, 50%);
+  transition: 0.5s;
+}
+
+#header .signature:before,
+.signature:after {
+  content: "~";
+  margin: 5px;
 }
 
 #header.alt {
