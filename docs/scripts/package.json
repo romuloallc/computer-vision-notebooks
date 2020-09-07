@@ -1,0 +1,16 @@
+{
+  "name": "cvn-page-scripts",
+  "version": "1.0.0",
+  "description": "Scripts to deal with notebooks",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Diego Inácio",
+  "license": "ISC",
+  "devDependencies": {
+    "css": "^3.0.0",
+    "dom-parser": "^0.1.6",
+    "jsdom": "^16.4.0"
+  }
+}
