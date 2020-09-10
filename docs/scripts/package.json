@@ -11,6 +11,7 @@
   "devDependencies": {
     "css": "^3.0.0",
     "dom-parser": "^0.1.6",
-    "jsdom": "^16.4.0"
+    "jsdom": "^16.4.0",
+    "yargs": "^16.0.2"
   }
 }
