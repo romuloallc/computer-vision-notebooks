@@ -9,8 +9,10 @@
   "author": "Diego Inácio",
   "license": "ISC",
   "devDependencies": {
+    "chalk": "^4.1.0",
     "css": "^3.0.0",
     "dom-parser": "^0.1.6",
+    "enquirer": "^2.3.6",
     "jsdom": "^16.4.0",
     "yargs": "^16.0.2"
   }
