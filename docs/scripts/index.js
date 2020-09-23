@@ -4,6 +4,7 @@ const chalk = require("chalk");
 
 // ! Imports
 const search = require("./search");
+const metatag = require("./metatag");
 
 const NOTEBOOKS = search.get_notebooks();
 NOTEBOOKS.splice(0, 0, "--all");
@@ -27,18 +28,21 @@ enquirer
       name: "notebooks",
       message: "Select notebooks: ",
       limit: 5,
-      choices: NOTEBOOKS,
+      choices: NOTEBOOKS.slice(0),
     },
   ])
-  .then((answer) => {
-    switch (answer.option) {
+  .then((answers) => {
+    switch (answers.option) {
       case "Metatag":
-        // pass
+        // ! Metatag option selected
+        metatag.metatag_option(answers, NOTEBOOKS);
         break;
       case "Style":
+        // ! Style option selected
         // pass
         break;
       default:
+        // ! No option selected
         console.log(chalk.bold.red("No option was selected!"));
     }
   });
