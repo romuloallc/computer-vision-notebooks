@@ -14,7 +14,7 @@ const PAGES_PATH = path.join(__dirname, "../pages/");
 function filter_notebooks(answers, NOTEBOOKS) {
   // ! Filter notebook list based on the flag --all
   const all = answers.notebooks.includes("--all");
-  return all ? NOTEBOOKS : answers.notebooks;
+  return all ? NOTEBOOKS.filter((e) => e !== "--all") : answers.notebooks;
 }
 
 function HTMLtoDOM(content) {
@@ -145,7 +145,7 @@ function include_action(answers, NOTEBOOKS) {
             notebook,
             bodyData
           );
-          fs.writeFileSync(file, documentHTML);
+          // fs.writeFileSync(file, documentHTML);
         } else {
           // todo pass
         }
