@@ -13017,6 +13017,12 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
+<style type="text/css">
+    /* ! ************ */
+/* ! Custom style */
+/* ! ************ */
+
+    </style>
 
 
 <style type="text/css">
@@ -13083,6 +13089,8 @@ div#notebook {
 <li>GitHub: <a href="https://github.com/diegoinacio">github.com/diegoinacio</a></li>
 <li>Notebook: <a href="https://github.com/diegoinacio/computer-vision-notebooks/blob/master/Computer-Vision-Experiments/MNIST_classification.ipynb">MNIST_classification.ipynb</a></li>
 </ul>
+<hr>
+<p>Digit classification using <em>Shallow Neural Network</em> and <em>Convolutional Neural Network</em>.</p>
 
 </div>
 </div>
@@ -13096,7 +13104,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">matplotlib</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 </pre></div>
@@ -13193,7 +13201,7 @@ Y_test_oh: (10000, 10)
     <span class="n">img_show</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">rindex</span><span class="p">][</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_show</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
     <span class="c1"># title label + one-hot</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{Y_train[rindex]}</span><span class="s1"> :: &#39;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">Y_train</span><span class="p">[</span><span class="n">rindex</span><span class="p">]</span><span class="si">}</span><span class="s1"> :: &#39;</span>
     <span class="n">title</span> <span class="o">+=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">Y_train_oh</span><span class="p">[</span><span class="n">rindex</span><span class="p">]])</span> 
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -13345,7 +13353,7 @@ Y_test_oh: (10000, 10)
     <span class="n">loss_plot</span> <span class="o">+=</span> <span class="p">[</span><span class="n">e</span><span class="o">*</span><span class="mi">100</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">modelSNN</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]]</span>
     <span class="n">accA_plot</span> <span class="o">+=</span> <span class="p">[</span><span class="n">e</span><span class="o">*</span><span class="mi">100</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">modelSNN</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]]</span>
     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">epoch</span> <span class="o">%</span> <span class="p">(</span><span class="n">EPOCHS</span><span class="o">//</span><span class="mi">5</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;epoch: {epoch*E:04d} | loss: </span><span class="si">{loss_plot[-1]:.3f}</span><span class="s1"> | accuracy: </span><span class="si">{accA_plot[-1]:06.2f}</span><span class="s1"> %&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="o">*</span><span class="n">E</span><span class="si">:</span><span class="s1">04d</span><span class="si">}</span><span class="s1"> | loss: </span><span class="si">{</span><span class="n">loss_plot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> | accuracy: </span><span class="si">{</span><span class="n">accA_plot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">06.2f</span><span class="si">}</span><span class="s1"> %&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
