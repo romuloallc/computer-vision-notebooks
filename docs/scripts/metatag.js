@@ -37,14 +37,17 @@ function scrap_data(document) {
   // * .. from the first cell of the notebook.
   let body = document.querySelector("body");
   let div = body.querySelector("#notebook > .container .text_cell_render");
-  let h1_title =
-    div.querySelector("h1").textContent || div.querySelector("h1").innerText;
-  let p_description =
-    div.querySelector("p").textContent || div.querySelector("p").innerText;
-  let bodyData = {
-    title: h1_title.replace(/¶/g, "").trim(),
-    description: p_description.replace(/¶/g, "").trim(),
-  };
+  // * Define title text from <h1>
+  let h1_tag = div.querySelector("h1");
+  let h1_title = h1_tag.textContent || h1_tag.innerText;
+  h1_title = h1_title.replace(/¶/g, ""); // ? Remove Pilcrow
+  h1_title = h1_title.trim().replace(/\s\s+/g, " "); // ? Remove extra spaces
+  // *  Define description text from <p>
+  let p_tag = div.querySelector("p");
+  let p_description = p_tag.textContent || p_tag.innerText;
+  p_description = p_description.trim().replace(/\s\s+/g, " "); // ? Remove extra spaces
+
+  let bodyData = { title: h1_title, description: p_description };
   // * Scrap head and get all the meta tags
   let metaData = head.querySelectorAll(":scope meta");
   let metaHTML = Array.from(metaData).map((meta) => {
@@ -96,15 +99,12 @@ function include_automatically(document, notebook, bodyData) {
   // ! Include all meta tags in bodyData
   // ! Convert raw format to element before including
   let head = document.querySelector("head");
-  let before = document.createComment(" ! custom meta tags ");
-  head.insertBefore(before, head.children[0]);
-  generate_tags(notebook, bodyData).forEach((tag) => {
-    let element = document.createRange().createContextualFragment(tag);
-    head.insertBefore(element, before.nextSibling);
-    before = element;
-  });
-  let commentEnd = document.createComment(" /! custom meta tags ");
-  head.insertBefore(commentEnd, before.nextSibling);
+  let tags = generate_tags(notebook, bodyData);
+  tags.splice(0, 0, "<!-- ! custom meta tags -->");
+  tags.push("<!-- /! custom meta tags -->");
+  let joined_tags = tags.join(" ");
+  let elements = document.createRange().createContextualFragment(joined_tags);
+  head.insertBefore(elements, head.childNodes[0]);
 
   return document.documentElement.innerHTML;
 }
@@ -135,28 +135,24 @@ function include_action(answers, NOTEBOOKS) {
           document
         ));
 
+        let documentHTML;
         if (answers.how === "Automatically") {
           // todo organize conditions for all and selected
           let metaData_ = Array.from(metaData).concat(title);
           let metaHTML_ = Array.from(metaHTML).concat(titleHTML);
           remove_all(document, metaData_);
           if (answers.which === "All") {
-            let documentHTML = include_automatically(
-              document,
-              notebook,
-              bodyData
-            );
+            documentHTML = include_automatically(document, notebook, bodyData);
           } else {
             // ! If method is Manually
             // todo
           }
-
-          fs.writeFileSync(file, documentHTML);
-          console.log(chalk.bold.green(`${notebook} was saved!`));
         } else {
           // ! If method is Manually
           // todo pass
         }
+        fs.writeFileSync(file, documentHTML);
+        console.log(chalk.bold.green(`${notebook} was saved!`));
       });
     });
 }
@@ -188,7 +184,7 @@ function show_action(answers, NOTEBOOKS) {
           : chalk.bold.red;
       console.log(color(meta));
     });
-    console.log(); // skip a line
+    console.log(); // ? skip a line
   });
 }
 
