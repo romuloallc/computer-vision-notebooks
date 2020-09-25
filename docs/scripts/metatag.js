@@ -36,9 +36,7 @@ function scrap_data(document) {
   // * Scrap body and get title and description ..
   // * .. from the first cell of the notebook.
   let body = document.querySelector("body");
-  let div = body.querySelector(
-    "div.text_cell_render.border-box-sizing.rendered_html"
-  );
+  let div = body.querySelector("#notebook > .container .text_cell_render");
   let h1_title =
     div.querySelector("h1").textContent || div.querySelector("h1").innerText;
   let p_description =
@@ -139,14 +137,24 @@ function include_action(answers, NOTEBOOKS) {
 
         if (answers.how === "Automatically") {
           // todo organize conditions for all and selected
-          remove_all(document, Array.from(metaData).concat(title));
-          let documentHTML = include_automatically(
-            document,
-            notebook,
-            bodyData
-          );
-          // fs.writeFileSync(file, documentHTML);
+          let metaData_ = Array.from(metaData).concat(title);
+          let metaHTML_ = Array.from(metaHTML).concat(titleHTML);
+          remove_all(document, metaData_);
+          if (answers.which === "All") {
+            let documentHTML = include_automatically(
+              document,
+              notebook,
+              bodyData
+            );
+          } else {
+            // ! If method is Manually
+            // todo
+          }
+
+          fs.writeFileSync(file, documentHTML);
+          console.log(chalk.bold.green(`${notebook} was saved!`));
         } else {
+          // ! If method is Manually
           // todo pass
         }
       });
