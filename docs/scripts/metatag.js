@@ -33,15 +33,18 @@ function scrap_data(document) {
   let head = document.querySelector("head");
   let title = head.querySelectorAll(":scope title")[0];
   let titleHTML = title.outerHTML;
+
   // * Scrap body and get title and description ..
   // * .. from the first cell of the notebook.
   let body = document.querySelector("body");
   let div = body.querySelector("#notebook > .container .text_cell_render");
+
   // * Define title text from <h1>
   let h1_tag = div.querySelector("h1");
   let h1_title = h1_tag.textContent || h1_tag.innerText;
   h1_title = h1_title.replace(/¶/g, ""); // ? Remove Pilcrow
   h1_title = h1_title.trim().replace(/\s\s+/g, " "); // ? Remove extra spaces
+
   // *  Define description text from <p>
   let p_tag = div.querySelector("p");
   let p_description = p_tag.textContent || p_tag.innerText;
@@ -75,91 +78,76 @@ function generate_tags(notebook, bodyData) {
   ];
 }
 
-function remove_all(document, metaData) {
-  // ! Remove all meta tags in metaData
-  let head = document.querySelector("head");
-  // * Remove comments "custom meta tags"
-  head.childNodes.forEach((node) => {
-    // ? Comment type or Node.COMMENT_NODE is 8
-    if (node.nodeType === 8) {
-      let comment = node.nodeValue.trim();
-      let regex = /^\/?! custom meta tags$/;
-      if (comment.match(regex)) {
-        head.removeChild(node);
-      }
-    }
-  });
-  // * Remove all meta tags from metaData
-  metaData.forEach((meta) => {
-    head.removeChild(meta);
-  });
-}
-
-function include_automatically(document, notebook, bodyData) {
-  // ! Include all meta tags in bodyData
-  // ! Convert raw format to element before including
-  let head = document.querySelector("head");
-  let tags = generate_tags(notebook, bodyData);
-  tags.splice(0, 0, "<!-- ! custom meta tags -->");
-  tags.push("<!-- /! custom meta tags -->");
-  let joined_tags = tags.join(" ");
-  let elements = document.createRange().createContextualFragment(joined_tags);
-  head.insertBefore(elements, head.childNodes[0]);
-
-  return document.documentElement.innerHTML;
-}
-
 function include_action(answers, NOTEBOOKS) {
+  // ! Include all meta tags
   const _NOTEBOOKS = filter_notebooks(answers, NOTEBOOKS);
-  enquirer
-    .prompt([
-      {
-        type: "select",
-        name: "how",
-        message: "How to include? ",
-        choices: ["Automatically", "Manually"],
-      },
-      {
-        type: "select",
-        name: "which",
-        message: "Which meta tags? ",
-        choices: ["All", "Selected"],
-      },
-    ])
-    .then((answers) => {
-      _NOTEBOOKS.forEach((notebook) => {
-        let file = path.join(PAGES_PATH, `${notebook}.html`);
-        let content = fs.readFileSync(file, "utf8");
-        ({ HTML, DOM, window, document } = HTMLtoDOM(content));
-        ({ title, titleHTML, bodyData, metaData, metaHTML } = scrap_data(
-          document
-        ));
+  // * Foreach notebook do ..
+  _NOTEBOOKS.forEach((notebook) => {
+    // * Read html file
+    let file = path.join(PAGES_PATH, `${notebook}.html`);
+    let content = fs.readFileSync(file, "utf8");
+    ({ HTML, DOM, window, document } = HTMLtoDOM(content));
+    ({ title, titleHTML, bodyData, metaData, metaHTML } = scrap_data(document));
 
-        let documentHTML;
-        if (answers.how === "Automatically") {
-          // todo organize conditions for all and selected
-          let metaData_ = Array.from(metaData).concat(title);
-          let metaHTML_ = Array.from(metaHTML).concat(titleHTML);
-          remove_all(document, metaData_);
-          if (answers.which === "All") {
-            documentHTML = include_automatically(document, notebook, bodyData);
-          } else {
-            // ! If method is Manually
-            // todo
-          }
-        } else {
-          // ! If method is Manually
-          // todo pass
-        }
-        fs.writeFileSync(file, documentHTML);
-        console.log(chalk.bold.green(`${notebook} was saved!`));
-      });
-    });
+    // * Include new title to meta tag list
+    let metaData_ = Array.from(metaData).concat(title);
+
+    // * Remove all the meta tags in the current document
+    remove_all(document, metaData_);
+
+    // * Includes
+    let head = document.querySelector("head");
+    let tags = generate_tags(notebook, bodyData);
+    tags.splice(0, 0, "<!-- ! custom meta tags -->");
+    tags.push("<!-- /! custom meta tags -->");
+    let joined_tags = tags.join(" ");
+    let elements = document.createRange().createContextualFragment(joined_tags);
+    head.insertBefore(elements, head.childNodes[0]);
+
+    // * Write file
+    documentHTML = document.documentElement.innerHTML;
+    fs.writeFileSync(file, documentHTML);
+    console.log(chalk.bold.green(`${notebook} was saved!`));
+  });
 }
 
 function remove_action(answers, NOTEBOOKS) {
+  // ! Remove all meta tags
   const _NOTEBOOKS = filter_notebooks(answers, NOTEBOOKS);
-  // todo pass
+  // * Foreach notebook do ..
+  _NOTEBOOKS.forEach((notebook) => {
+    // * Read html file
+    let file = path.join(PAGES_PATH, `${notebook}.html`);
+    let content = fs.readFileSync(file, "utf8");
+    ({ HTML, DOM, window, document } = HTMLtoDOM(content));
+    ({ title, titleHTML, bodyData, metaData, metaHTML } = scrap_data(document));
+
+    // * Include new title to meta tag list
+    let metaData_ = Array.from(metaData).concat(title);
+
+    let head = document.querySelector("head");
+    // * Remove comments "custom meta tags"
+    head.childNodes.forEach((node) => {
+      // ? Comment type or Node.COMMENT_NODE is 8
+      if (node.nodeType === 8) {
+        let comment = node.nodeValue.trim();
+        let regex = /^\/?! custom meta tags$/;
+        if (comment.match(regex)) {
+          head.removeChild(node);
+        }
+      }
+    });
+
+    // * Remove all meta tags from metaData
+    metaData_.forEach((meta) => {
+      head.removeChild(meta);
+    });
+
+    // * Write file
+    documentHTML = document.documentElement.innerHTML;
+    fs.writeFileSync(file, documentHTML);
+    console.log(chalk.bold.green(`${notebook} was saved!`));
+  });
 }
 
 function show_action(answers, NOTEBOOKS) {
