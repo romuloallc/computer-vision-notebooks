@@ -6,6 +6,7 @@ const chalk = require("chalk");
 const search = require("./search");
 const metatag = require("./metatag");
 
+// * Get all notebooks and include the option --all
 const NOTEBOOKS = search.get_notebooks();
 NOTEBOOKS.splice(0, 0, "--all");
 
@@ -39,7 +40,7 @@ enquirer
         break;
       case "Style":
         // ! Style option selected
-        // pass
+        // todo pass
         break;
       default:
         // ! No option selected
