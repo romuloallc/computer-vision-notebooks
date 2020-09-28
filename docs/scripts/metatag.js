@@ -1,14 +1,14 @@
+// ! Requires
 const path = require("path");
 const fs = require("fs");
 const jsdom = require("jsdom");
 const chalk = require("chalk");
-const enquirer = require("enquirer");
 
-// * Init DOM parses
+// ! Init DOM parses
 const DomParser = require("dom-parser");
 const parser = new DomParser();
 
-// * Get pages directory
+// ! Get pages directory
 const PAGES_PATH = path.join(__dirname, "../pages/");
 
 function filter_notebooks(answers, NOTEBOOKS) {
