@@ -77,8 +77,7 @@ function generate_tags(notebook, bodyData) {
     `<meta property="article:section" content="Computer Vision Notebooks">`,
   ];
 }
-
-function include_action(answers, NOTEBOOKS) {
+function execute_action(answers, NOTEBOOKS) {
   // ! Include all meta tags
   const _NOTEBOOKS = filter_notebooks(answers, NOTEBOOKS);
   // * Foreach notebook do ..
@@ -92,40 +91,8 @@ function include_action(answers, NOTEBOOKS) {
     // * Include new title to meta tag list
     let metaData_ = Array.from(metaData).concat(title);
 
-    // * Remove all the meta tags in the current document
-    remove_all(document, metaData_);
-
-    // * Includes
     let head = document.querySelector("head");
-    let tags = generate_tags(notebook, bodyData);
-    tags.splice(0, 0, "<!-- ! custom meta tags -->");
-    tags.push("<!-- /! custom meta tags -->");
-    let joined_tags = tags.join(" ");
-    let elements = document.createRange().createContextualFragment(joined_tags);
-    head.insertBefore(elements, head.childNodes[0]);
 
-    // * Write file
-    documentHTML = document.documentElement.innerHTML;
-    fs.writeFileSync(file, documentHTML);
-    console.log(chalk.bold.green(`${notebook} was saved!`));
-  });
-}
-
-function remove_action(answers, NOTEBOOKS) {
-  // ! Remove all meta tags
-  const _NOTEBOOKS = filter_notebooks(answers, NOTEBOOKS);
-  // * Foreach notebook do ..
-  _NOTEBOOKS.forEach((notebook) => {
-    // * Read html file
-    let file = path.join(PAGES_PATH, `${notebook}.html`);
-    let content = fs.readFileSync(file, "utf8");
-    ({ HTML, DOM, window, document } = HTMLtoDOM(content));
-    ({ title, titleHTML, bodyData, metaData, metaHTML } = scrap_data(document));
-
-    // * Include new title to meta tag list
-    let metaData_ = Array.from(metaData).concat(title);
-
-    let head = document.querySelector("head");
     // * Remove comments "custom meta tags"
     head.childNodes.forEach((node) => {
       // ? Comment type or Node.COMMENT_NODE is 8
@@ -142,6 +109,19 @@ function remove_action(answers, NOTEBOOKS) {
     metaData_.forEach((meta) => {
       head.removeChild(meta);
     });
+
+    if (answers.action === "Include") {
+      // * Includes
+      let head = document.querySelector("head");
+      let tags = generate_tags(notebook, bodyData);
+      tags.splice(0, 0, "<!-- ! custom meta tags -->");
+      tags.push("<!-- /! custom meta tags -->");
+      let joined_tags = tags.join(" ");
+      let elements = document
+        .createRange()
+        .createContextualFragment(joined_tags);
+      head.insertBefore(elements, head.childNodes[0]);
+    }
 
     // * Write file
     documentHTML = document.documentElement.innerHTML;
@@ -177,15 +157,10 @@ function show_action(answers, NOTEBOOKS) {
 }
 
 function metatag_option(answers, NOTEBOOKS) {
-  switch (answers.action) {
-    case "Include":
-      include_action(answers, NOTEBOOKS);
-      break;
-    case "Remove":
-      remove_action(answers, NOTEBOOKS);
-      break;
-    default:
-      show_action(answers, NOTEBOOKS);
+  if (answers.action === "Show") {
+    show_action(answers, NOTEBOOKS);
+  } else {
+    execute_action(answers, NOTEBOOKS);
   }
 }
 
