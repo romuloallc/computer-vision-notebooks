@@ -124,7 +124,8 @@ function execute_action(answers, NOTEBOOKS) {
     }
 
     // * Write file
-    documentHTML = document.documentElement.innerHTML;
+    let documentHTML = "<!DOCTYPE html>";
+    documentHTML += document.documentElement.outerHTML;
     fs.writeFileSync(file, documentHTML);
     console.log(chalk.bold.green(`${notebook} was saved!`));
   });
