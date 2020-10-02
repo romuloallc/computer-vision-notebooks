@@ -5,6 +5,7 @@ const chalk = require("chalk");
 // ! Imports
 const search = require("./search");
 const metatag = require("./metatag");
+const style = require("./style");
 
 // * Get all notebooks and include the option --all
 const NOTEBOOKS = search.get_notebooks();
@@ -40,7 +41,7 @@ enquirer
         break;
       case "Style":
         // ! Style option selected
-        // todo pass
+        style.style_option(answers, NOTEBOOKS);
         break;
       default:
         // ! No option selected
