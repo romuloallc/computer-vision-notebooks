@@ -17,4 +17,10 @@ function get_notebooks() {
   return NOTEBOOKS;
 }
 
-module.exports = { get_notebooks };
+function filter_notebooks(answers, NOTEBOOKS) {
+  // ! Filter notebook list based on the flag --all
+  const all = answers.notebooks.includes("--all");
+  return all ? NOTEBOOKS.filter((e) => e !== "--all") : answers.notebooks;
+}
+
+module.exports = { get_notebooks, filter_notebooks };
