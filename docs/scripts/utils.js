@@ -1,6 +1,9 @@
 // ! Requires
+const fs = require("fs");
 const jsdom = require("jsdom");
 const css = require("css");
+const chalk = require("chalk");
+const prettier = require("prettier");
 
 // ! Init DOM parser
 const DomParser = require("dom-parser");
@@ -18,6 +21,18 @@ function HTMLtoDOM(content) {
   let document = window.document;
 
   return { HTML, DOM, window, document };
+}
+
+function write_file(file, document, notebook) {
+  // ! Write file from document
+  let documentHTML = "<!DOCTYPE html>";
+  documentHTML += document.documentElement.outerHTML;
+  documentHTML = prettier.format(documentHTML, {
+    parser: "html",
+    tabWidth: 2,
+  });
+  fs.writeFileSync(file, documentHTML);
+  console.log(chalk.bold.green(`${notebook} was saved!`));
 }
 
 // ! ********* //
@@ -100,6 +115,7 @@ function parseCSS(content) {
 
 module.exports = {
   HTMLtoDOM,
+  write_file,
   generate_tags,
   scrap_data,
   check_imported_style,

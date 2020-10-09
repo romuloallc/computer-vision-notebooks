@@ -2,7 +2,6 @@
 const path = require("path");
 const fs = require("fs");
 const chalk = require("chalk");
-const prettier = require("prettier");
 
 // ! Imports
 const search = require("./search");
@@ -59,16 +58,7 @@ function execute_action(answers, NOTEBOOKS) {
       head.insertBefore(elements, head.childNodes[0]);
     }
 
-    // * Write file
-    let documentHTML = "<!DOCTYPE html>";
-    documentHTML += document.documentElement.outerHTML;
-    // documentHTML = documentHTML.replace(/^\s*[\r\n]/gm, "");
-    documentHTML = prettier.format(documentHTML, {
-      parser: "html",
-      tabWidth: 2,
-    });
-    fs.writeFileSync(file, documentHTML);
-    console.log(chalk.bold.green(`${notebook} was saved!`));
+    utils.write_file(file, document, notebook);
   });
 }
 
