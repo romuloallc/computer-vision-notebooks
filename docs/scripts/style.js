@@ -2,7 +2,6 @@
 const path = require("path");
 const fs = require("fs");
 const chalk = require("chalk");
-const prettier = require("prettier");
 
 // ! Imports
 const search = require("./search");
@@ -22,7 +21,26 @@ const RULE_TYPES = ["rule", "media", "font-face", "keyframes"];
 
 function execute_action(answers, NOTEBOOKS) {
   // !
-  // todo pass
+  const _NOTEBOOKS = search.filter_notebooks(answers, NOTEBOOKS);
+  _NOTEBOOKS.forEach((notebook) => {
+    // * Read html file
+    let file = path.join(PAGES_PATH, `${notebook}.html`);
+    let content = fs.readFileSync(file, "utf8");
+    ({ HTML, DOM, window, document } = utils.HTMLtoDOM(content));
+
+    let head = document.querySelector("head");
+    let STYLES = head.querySelectorAll(":scope style");
+
+    if (answers.action === "Include") {
+      // * Includes
+      // todo pass
+    } else {
+      // * Removes
+      // todo pass
+    }
+
+    // utils.write_file(file, document, notebook);
+  });
 }
 
 function show_action(answers, NOTEBOOKS) {
