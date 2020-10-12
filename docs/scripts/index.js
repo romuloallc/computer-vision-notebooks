@@ -6,6 +6,7 @@ const chalk = require("chalk");
 const search = require("./search");
 const metatag = require("./metatag");
 const style = require("./style");
+const navbar = require("./navbar");
 
 // * Get all notebooks and include the option --all
 const NOTEBOOKS = search.get_notebooks();
@@ -17,7 +18,7 @@ enquirer
       type: "select",
       name: "option",
       message: "Select option: ",
-      choices: ["Metatag", "Style"],
+      choices: ["Metatag", "Style", "Navbar"],
     },
     {
       type: "select",
@@ -42,6 +43,10 @@ enquirer
       case "Style":
         // ! Style option selected
         style.style_option(answers, NOTEBOOKS);
+        break;
+      case "Navbar":
+        // ! Style option selected
+        navbar.navbar_option(answers, NOTEBOOKS);
         break;
       default:
         // ! No option selected
