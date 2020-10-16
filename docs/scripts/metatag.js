@@ -47,7 +47,6 @@ function execute_action(answers, NOTEBOOKS) {
 
     if (answers.action === "Include") {
       // * Includes
-      let head = document.querySelector("head");
       let tags = utils.generate_tags(notebook, bodyData);
       tags.splice(0, 0, "<!-- ! custom meta tags -->");
       tags.push("<!-- /! custom meta tags -->");
