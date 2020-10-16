@@ -11,7 +11,7 @@ const utils = require("./utils");
 const PAGES_PATH = path.join(__dirname, "../pages/");
 
 function execute_action(answers, NOTEBOOKS) {
-  // ! Include all meta tags
+  // ! Include or remove all meta tags
   const _NOTEBOOKS = search.filter_notebooks(answers, NOTEBOOKS);
   // * Foreach notebook do ..
   _NOTEBOOKS.forEach((notebook) => {
