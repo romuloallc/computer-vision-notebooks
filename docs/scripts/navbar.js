@@ -11,7 +11,58 @@ const utils = require("./utils");
 const PAGES_PATH = path.join(__dirname, "../pages/");
 
 function execute_action(answers, NOTEBOOKS) {
-  // todo pass
+  // !
+  const _NOTEBOOKS = search.filter_notebooks(answers, NOTEBOOKS);
+  // * Foreach notebook do ..
+  _NOTEBOOKS.forEach((notebook) => {
+    let file = path.join(PAGES_PATH, `${notebook}.html`);
+    let content = fs.readFileSync(file, "utf8");
+    ({ HTML, DOM, window, document } = utils.HTMLtoDOM(content));
+    ({ title, titleHTML, bodyData, metaData, metaHTML } = utils.scrap_data(
+      document
+    ));
+
+    let body = document.querySelector("body");
+
+    // * Remove comments "custom navbar"
+    body.childNodes.forEach((node) => {
+      // ? Comment type or Node.COMMENT_NODE is 8
+      if (node.nodeType === 8) {
+        let comment = node.nodeValue.trim();
+        let regex = /^\/?! custom navbar$/;
+        if (comment.match(regex)) {
+          body.removeChild(node);
+        }
+      }
+    });
+
+    let DIVS = body.querySelectorAll(":scope div.notebook-navbar");
+
+    // * Remove all navbar div.notebook-navbar
+    DIVS.forEach((div) => {
+      body.removeChild(div);
+    });
+
+    if (answers.action === "Include") {
+      // * Includes
+      let tags = [
+        "<!-- ! custom navbar -->",
+        `<div class="notebook-navbar">`,
+        `<a href="http://diegoinacio.github.io/computer-vision-notebooks/">`,
+        `Return to <span>Computer Vision Notebooks</span>`,
+        `</a>`,
+        `</div>`,
+        "<!-- /! custom navbar -->",
+      ];
+      let joined_tags = tags.join(" ");
+      let elements = document
+        .createRange()
+        .createContextualFragment(joined_tags);
+      body.insertBefore(elements, body.childNodes[0]);
+    }
+
+    utils.write_file(file, document, notebook);
+  });
 }
 
 function show_action(answers, NOTEBOOKS) {
@@ -47,4 +98,4 @@ function navbar_option(answers, NOTEBOOKS) {
   }
 }
 
-module.exports = {navbar_option};
+module.exports = { navbar_option };
