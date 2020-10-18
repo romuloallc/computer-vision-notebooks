@@ -18,9 +18,6 @@ function execute_action(answers, NOTEBOOKS) {
     let file = path.join(PAGES_PATH, `${notebook}.html`);
     let content = fs.readFileSync(file, "utf8");
     ({ HTML, DOM, window, document } = utils.HTMLtoDOM(content));
-    ({ title, titleHTML, bodyData, metaData, metaHTML } = utils.scrap_data(
-      document
-    ));
 
     let body = document.querySelector("body");
 
@@ -75,9 +72,6 @@ function show_action(answers, NOTEBOOKS) {
     let file = path.join(PAGES_PATH, `${notebook}.html`);
     let content = fs.readFileSync(file, "utf8");
     ({ HTML, DOM, window, document } = utils.HTMLtoDOM(content));
-    ({ title, titleHTML, bodyData, metaData, metaHTML } = utils.scrap_data(
-      document
-    ));
 
     let body = document.querySelector("body");
 
