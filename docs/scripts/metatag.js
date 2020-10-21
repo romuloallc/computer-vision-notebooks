@@ -45,17 +45,24 @@ function execute_action(answers, NOTEBOOKS) {
       head.removeChild(meta);
     });
 
+    let tags;
     if (answers.action === "Include") {
       // * Includes
-      let tags = utils.generate_tags(notebook, bodyData);
+      tags = utils.generate_tags(notebook, bodyData);
       tags.splice(0, 0, "<!-- ! custom meta tags -->");
       tags.push("<!-- /! custom meta tags -->");
-      let joined_tags = tags.join(" ");
-      let elements = document
-        .createRange()
-        .createContextualFragment(joined_tags);
-      head.insertBefore(elements, head.childNodes[0]);
+    } else {
+      // * Removes
+      tags = [
+        "<!-- ! custom meta tags -->",
+        `<title>${bodyData.title}</title>`,
+        "<!-- /! custom meta tags -->",
+      ];
     }
+
+    let joined_tags = tags.join(" ");
+    let elements = document.createRange().createContextualFragment(joined_tags);
+    head.insertBefore(elements, head.childNodes[0]);
 
     utils.write_file(file, document, notebook);
   });
