@@ -29,16 +29,7 @@ function execute_action(answers, NOTEBOOKS) {
     let head = document.querySelector("head");
 
     // * Remove comments "custom meta tags"
-    head.childNodes.forEach((node) => {
-      // ? Comment type or Node.COMMENT_NODE is 8
-      if (node.nodeType === 8) {
-        let comment = node.nodeValue.trim();
-        let regex = /^\/?! custom meta tags$/;
-        if (comment.match(regex)) {
-          head.removeChild(node);
-        }
-      }
-    });
+    utils.remove_all_comments(head, /^\/?! custom meta tags$/);
 
     // * Remove all meta tags from metaData
     metaData_.forEach((meta) => {

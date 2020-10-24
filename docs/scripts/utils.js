@@ -35,6 +35,19 @@ function write_file(file, document, notebook) {
   console.log(chalk.bold.green(`${notebook} was saved!`));
 }
 
+function remove_all_comments(element, regex) {
+  // ! Remove all comments inside element based on regex pattern
+  element.childNodes.forEach((node) => {
+    // ? Comment type or Node.COMMENT_NODE is 8
+    if (node.nodeType === 8) {
+      let comment = node.nodeValue.trim();
+      if (comment.match(regex)) {
+        element.removeChild(node);
+      }
+    }
+  });
+}
+
 // ! ********* //
 // ! Meta tags //
 // ! ********* //
@@ -116,6 +129,7 @@ function parseCSS(content) {
 module.exports = {
   HTMLtoDOM,
   write_file,
+  remove_all_comments,
   generate_tags,
   scrap_data,
   check_imported_style,
