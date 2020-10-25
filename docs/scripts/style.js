@@ -30,16 +30,39 @@ function execute_action(answers, NOTEBOOKS) {
 
     let head = document.querySelector("head");
     let STYLES = head.querySelectorAll(":scope style");
+    let LINKS = head.querySelectorAll(":scope link");
+
+    // * Remove comments "custom notebook style"
+    utils.remove_all_comments(head, /^\/?! custom notebook style$/);
+
+    // * Remove importer links
+    for (link of LINKS) {
+      if (
+        link.rel === "stylesheet" &&
+        link.href === "../assets/css/notebook.css"
+      ) {
+        head.removeChild(link);
+      }
+    }
 
     if (answers.action === "Include") {
       // * Includes
-      // todo pass
+      tags = [
+        "\n\n<!-- ! custom notebook style -->",
+        `<link rel="stylesheet" href="../assets/css/notebook.css" />`,
+        "<!-- /! custom notebook style -->",
+      ];
+      let joined_tags = tags.join(" ");
+      let elements = document
+        .createRange()
+        .createContextualFragment(joined_tags);
+      STYLES[STYLES.length - 1].after(elements);
     } else {
       // * Removes
       // todo pass
     }
 
-    // utils.write_file(file, document, notebook);
+    utils.write_file(file, document, notebook);
   });
 }
 
