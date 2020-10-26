@@ -1,6 +1,7 @@
 // ! Requires
 const path = require("path");
 const fs = require("fs");
+const css = require("css");
 const chalk = require("chalk");
 
 // ! Imports
@@ -20,7 +21,8 @@ const CSS_BASE = utils.parseCSS(content).stylesheet.rules;
 const RULE_TYPES = ["rule", "media", "font-face", "keyframes"];
 
 function execute_action(answers, NOTEBOOKS) {
-  // !
+  // ! Include or remove notebook style link
+  // ! Remove rules which is in the style
   const _NOTEBOOKS = search.filter_notebooks(answers, NOTEBOOKS);
   _NOTEBOOKS.forEach((notebook) => {
     // * Read html file
@@ -48,18 +50,32 @@ function execute_action(answers, NOTEBOOKS) {
     if (answers.action === "Include") {
       // * Includes
       tags = [
-        "\n\n<!-- ! custom notebook style -->",
+        "\n\n\n<!-- ! custom notebook style -->",
         `<link rel="stylesheet" href="../assets/css/notebook.css" />`,
-        "<!-- /! custom notebook style -->",
+        "<!-- /! custom notebook style -->\n\n\n",
       ];
       let joined_tags = tags.join(" ");
       let elements = document
         .createRange()
         .createContextualFragment(joined_tags);
-      STYLES[STYLES.length - 1].after(elements);
+      head.insertBefore(elements, head.childNodes[0]);
     } else {
       // * Removes
-      // todo pass
+      for (let i = STYLES.length - 1; i >= 0; i--) {
+        let style = STYLES[i];
+        let P_CSS = utils.parseCSS(style.innerHTML);
+        let RULES = P_CSS.stylesheet.rules;
+        for (let j = RULES.length - 1; j >= 0; j--) {
+          let rule = RULES[j];
+          if (RULE_TYPES.includes(rule.type)) {
+            if (utils.deep_included(rule, CSS_BASE)) RULES.splice(j, 1);
+          } else {
+            RULES.splice(j, 1);
+          }
+        }
+        if (!RULES.length) head.removeChild(style);
+        else style.innerHTML = css.stringify(P_CSS);
+      }
     }
 
     utils.write_file(file, document, notebook);
