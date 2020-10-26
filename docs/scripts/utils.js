@@ -48,6 +48,15 @@ function remove_all_comments(element, regex) {
   });
 }
 
+function deep_property_remove(obj, property) {
+  // ! Remove property from object recursively
+  delete obj[property];
+  for (item in obj) {
+    if (typeof obj[item] === "object")
+      deep_property_remove(obj[item], property);
+  }
+}
+
 // ! ********* //
 // ! Meta tags //
 // ! ********* //
@@ -123,7 +132,22 @@ function check_imported_style(LINKS) {
 function parseCSS(content) {
   // ! Parse content css to object
   let obj = css.parse(content);
+  deep_property_remove(obj, "position");
   return obj;
+}
+
+function deep_included(rule, CSS_BASE) {
+  // ! Check if rule is included in the CSS_BASE
+  let s_rule = css.stringify({ stylesheet: { rules: [rule] } });
+  for (b_rule of CSS_BASE) {
+    let sb_rule = css.stringify({ stylesheet: { rules: [b_rule] } });
+    if (
+      s_rule.replace(/(\s+|\t+|\n+|\r+)/g, " ") ===
+      sb_rule.replace(/(\s+|\t+|\n+|\r+)/g, " ")
+    )
+      return true;
+  }
+  return false;
 }
 
 module.exports = {
@@ -134,4 +158,5 @@ module.exports = {
   scrap_data,
   check_imported_style,
   parseCSS,
+  deep_included,
 };
