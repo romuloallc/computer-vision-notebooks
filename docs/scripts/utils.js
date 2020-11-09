@@ -71,7 +71,7 @@ function generate_tags(notebook, bodyData) {
     `<meta property="og:url" content="https://diegoinacio.github.io/computer-vision-notebooks/pages/${notebook}.html">`,
     `<meta name="title" property="og:title" content="${bodyData.title} >> Computer Vision Notebooks | Diego Inácio">`,
     `<meta name="description" property="og:description" content="${bodyData.description}">`,
-    `<meta name="image" property="og:image" content="../images/thumb_${notebook}.jpg">`,
+    `<meta name="image" property="og:image" content="https://diegoinacio.github.io/computer-vision-notebooks/images/thumb_${notebook}.jpg">`,
     `<meta property="og:image:type" content="image/jpeg">`,
     `<meta property="og:type" content="article">`,
     `<meta property="article:author" content="Diego Inácio">`,
