@@ -42,5 +42,10 @@
             "strikethrough": false,
             "backgroundColor": "transparent"
         }
-    ]
+    ],
+    "liveSassCompile.settings.formats": [{
+        "format": "expanded",
+        "extensionName": ".css",
+        "savePath": "./assets/css"
+    }]
 }
