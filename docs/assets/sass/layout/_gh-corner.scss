@@ -1,0 +1,31 @@
+/* GitHub Corner */
+
+.github-corner {
+  svg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    mix-blend-mode: screen;
+    color: #000000;
+    fill: _palette(accent);
+  }
+
+  &:hover .octo-arm {
+    animation: octocat-wave 0.5s;
+  }
+
+  @keyframes octocat-wave {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    20%,
+    60% {
+      transform: rotate(-20deg);
+    }
+    40%,
+    80% {
+      transform: rotate(10deg);
+    }
+  }
+}
