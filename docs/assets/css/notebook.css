@@ -13608,7 +13608,7 @@ div#notebook {
 
 .notebook-navbar a:hover {
   transition: 0.25s;
-  background-color: hsla(150, 50%, 50%, 0.5);
+  background-color: hsla(190, 70%, 50%, 0.5);
 }
 
 .notebook-navbar a:before {

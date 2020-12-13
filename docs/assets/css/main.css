@@ -1797,7 +1797,7 @@ input[type="reset"].primary,
 input[type="button"].primary,
 button.primary,
 .button.primary {
-  background-color: #40bf80;
+  background-color: #26bbd9;
   color: #ffffff !important;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -1816,7 +1816,7 @@ input[type="reset"].primary:active,
 input[type="button"].primary:active,
 button.primary:active,
 .button.primary:active {
-  background-color: #26734d;
+  background-color: #177082;
 }
 
 input[type="submit"].primary.icon:before,
@@ -1998,9 +1998,9 @@ input[type="password"]:focus,
 input[type="email"]:focus,
 select:focus,
 textarea:focus {
-  border-color: #40bf80;
-  -webkit-box-shadow: 0 0 0 1px #40bf80;
-          box-shadow: 0 0 0 1px #40bf80;
+  border-color: #26bbd9;
+  -webkit-box-shadow: 0 0 0 1px #26bbd9;
+          box-shadow: 0 0 0 1px #26bbd9;
 }
 
 select {
@@ -2032,9 +2032,9 @@ input[type="radio"]:checked + label:before {
 
 input[type="checkbox"]:focus + label:before,
 input[type="radio"]:focus + label:before {
-  border-color: #40bf80;
-  -webkit-box-shadow: 0 0 0 1px #40bf80;
-          box-shadow: 0 0 0 1px #40bf80;
+  border-color: #26bbd9;
+  -webkit-box-shadow: 0 0 0 1px #26bbd9;
+          box-shadow: 0 0 0 1px #26bbd9;
 }
 
 ::-webkit-input-placeholder {
@@ -2897,7 +2897,7 @@ table.alt tbody tr td {
 }
 
 #header .description .notebooks {
-  border-bottom: 1px dotted #40bf80;
+  border-bottom: 1px dotted #26bbd9;
 }
 
 #header .description .computer-vision {
@@ -2922,7 +2922,7 @@ table.alt tbody tr td {
 #header .signature .name:hover {
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  color: #40bf80;
+  color: #26bbd9;
 }
 
 #header .signature:before, #header .signature:after {
@@ -3238,7 +3238,7 @@ body.is-preload #header.alt .logo {
 #main input[type="button"].primary,
 #main button.primary,
 #main .button.primary {
-  background-color: #40bf80;
+  background-color: #26bbd9;
   color: #ffffff !important;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -3257,7 +3257,7 @@ body.is-preload #header.alt .logo {
 #main input[type="button"].primary:active,
 #main button.primary:active,
 #main .button.primary:active {
-  background-color: #26734d;
+  background-color: #177082;
 }
 
 #main input[type="submit"].primary.icon:before,
@@ -3286,9 +3286,9 @@ body.is-preload #header.alt .logo {
 #main input[type="email"]:focus,
 #main select:focus,
 #main textarea:focus {
-  border-color: #40bf80;
-  -webkit-box-shadow: 0 0 0 1px #40bf80;
-          box-shadow: 0 0 0 1px #40bf80;
+  border-color: #26bbd9;
+  -webkit-box-shadow: 0 0 0 1px #26bbd9;
+          box-shadow: 0 0 0 1px #26bbd9;
 }
 
 #main select {
@@ -3320,9 +3320,9 @@ body.is-preload #header.alt .logo {
 
 #main input[type="checkbox"]:focus + label:before,
 #main input[type="radio"]:focus + label:before {
-  border-color: #40bf80;
-  -webkit-box-shadow: 0 0 0 1px #40bf80;
-          box-shadow: 0 0 0 1px #40bf80;
+  border-color: #26bbd9;
+  -webkit-box-shadow: 0 0 0 1px #26bbd9;
+          box-shadow: 0 0 0 1px #26bbd9;
 }
 
 #main ::-webkit-input-placeholder {
@@ -3583,7 +3583,7 @@ body.is-preload #header.alt .logo {
   top: 0;
   mix-blend-mode: screen;
   color: #000000;
-  fill: #40bf80;
+  fill: #26bbd9;
 }
 
 .github-corner:hover .octo-arm {
