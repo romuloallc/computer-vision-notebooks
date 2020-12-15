@@ -2639,6 +2639,7 @@ table.alt tbody tr td {
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
   background-color: rgba(37, 37, 37, 0.05);
+  border: 1px dashed rgba(37, 37, 37, 0.05);
   width: calc(25% - 1em);
   margin-left: 1em;
   margin-bottom: 2em;
@@ -2651,11 +2652,12 @@ table.alt tbody tr td {
 
 .features li h3 {
   font-weight: 800;
+  margin-left: 0.25rem;
 }
 
 .features li p {
   text-align: start;
-  margin-top: auto;
+  margin: auto 0.1rem auto 0.5rem;
 }
 
 .features li .button {

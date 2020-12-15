@@ -13,6 +13,7 @@
     @include vendor("display", "flex");
     flex-flow: column nowrap;
     background-color: transparentize(_palette(bg), 0.95);
+    border: 1px dashed transparentize(_palette(bg), 0.95);
     width: calc(#{(100% / 4)} - #{_size(element-margin) / 2});
     margin-left: _size(element-margin) / 2;
     margin-bottom: _size(element-margin);
@@ -24,11 +25,12 @@
 
     h3 {
       font-weight: _font(weight-bold) * 2;
+      margin-left: 0.25rem;
     }
 
     p {
       text-align: start;
-      margin-top: auto;
+      margin: auto 0.1rem auto 0.5rem;
     }
 
     .button {
