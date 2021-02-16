@@ -26,6 +26,10 @@ function execute_action(answers, NOTEBOOKS) {
     // * Include new title to meta tag list
     let metaData_ = Array.from(metaData).concat(title);
 
+    // * Include favicon
+    let link = document.createElement("link");
+    link.outerHTML = `<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />`;
+
     let head = document.querySelector("head");
 
     // * Remove comments "custom meta tags"

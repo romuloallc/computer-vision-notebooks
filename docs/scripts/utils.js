@@ -64,6 +64,7 @@ function deep_property_remove(obj, property) {
 function generate_tags(notebook, bodyData) {
   // ! Generate all default meta tags
   return [
+    `<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />`,
     `<title>${bodyData.title}</title>`,
     `<meta charset="utf-8">`,
     `<meta name="viewport" content="width=device-width, initial-scale=1.0">`,
@@ -83,7 +84,7 @@ function scrap_data(document) {
   // ! Collect all necessary data from document
   // * Scrap head and get the page's title element
   let head = document.querySelector("head");
-  let title = head.querySelectorAll(":scope title")[0];
+  let title = head.querySelector("title");
   let titleHTML = title.outerHTML;
 
   // * Scrap body and get title and description ..
